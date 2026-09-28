@@ -1,0 +1,65 @@
+{
+  "name": "todo-days",
+  "version": "1.0.0",
+  "description": "本地桌面日程与 Todo 管理应用（Electron + Vue3 + TypeScript + SQLite）",
+  "main": "./out/main/index.js",
+  "author": "TodoDays",
+  "private": true,
+  "scripts": {
+    "dev": "electron-vite dev",
+    "build": "electron-vite build",
+    "start": "electron-vite preview",
+    "dist": "electron-vite build && electron-builder --win --x64",
+    "typecheck:node": "tsc --noEmit -p tsconfig.node.json --composite false",
+    "typecheck:web": "vue-tsc --noEmit -p tsconfig.web.json --composite false",
+    "typecheck": "npm run typecheck:node && npm run typecheck:web"
+  },
+  "devDependencies": {
+    "@esbuild/win32-x64": "^0.28.2",
+    "@rollup/rollup-win32-x64-msvc": "^4.63.5",
+    "@types/node": "^22.15.0",
+    "@vitejs/plugin-vue": "^5.2.4",
+    "electron": "^37.0.0",
+    "electron-builder": "^26.15.3",
+    "electron-vite": "^3.1.0",
+    "pinia": "^3.0.3",
+    "typescript": "~5.8.3",
+    "vite": "^6.3.5",
+    "vue": "^3.5.17",
+    "vue-router": "^4.5.1",
+    "vue-tsc": "^2.2.10"
+  },
+  "build": {
+    "appId": "com.todo-days.app",
+    "productName": "TodoDays",
+    "directories": {
+      "output": "dist",
+      "buildResources": "build"
+    },
+    "files": [
+      "out/**",
+      "package.json",
+      "!**/*.map"
+    ],
+    "asar": true,
+    "compression": "normal",
+    "win": {
+      "target": [
+        { "target": "nsis", "arch": ["x64"] },
+        { "target": "portable", "arch": ["x64"] }
+      ],
+      "icon": "build/icon.png"
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "shortcutName": "TodoDays",
+      "artifactName": "TodoDays-Setup-${version}.${ext}"
+    },
+    "portable": {
+      "artifactName": "TodoDays-Portable-${version}.${ext}"
+    }
+  }
+}
